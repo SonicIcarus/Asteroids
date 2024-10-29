@@ -6,23 +6,23 @@ from constants import *
 
 def main():
     pygame.init()
-    events()
-    set_up_screen(screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_WIDTH)))
+    game_loop(screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_WIDTH)), clock = pygame.time.Clock(), dt = 0)
+    
 
 def events():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            return
+            return False
+        
+    return True
 
-def set_up_screen(screen):
-    while True:
+def game_loop(screen, clock, dt):
+    running = True  # Start with the game running
+    while running:  # Keep going while running is True
         screen.fill(color="Black")
         pygame.display.flip()
-
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
-
+        running = events()  # Store the result from events()
+        dt = (clock.tick(60) / 1000)
 
 if __name__ == "__main__":
     main()
