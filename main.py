@@ -3,10 +3,11 @@
 # throughout this file
 import pygame
 from constants import *
+from player import *
 
 def main():
     pygame.init()
-    game_loop(screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_WIDTH)), clock = pygame.time.Clock(), dt = 0)
+    game_loop(screen=pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)), clock=pygame.time.Clock(), dt=0, player=Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
     
 
 def events():
@@ -16,10 +17,11 @@ def events():
         
     return True
 
-def game_loop(screen, clock, dt):
+def game_loop(screen, clock, dt, player):
     running = True  # Start with the game running
     while running:  # Keep going while running is True
-        screen.fill(color="Black")
+        screen.fill("black")
+        player.draw(screen)
         pygame.display.flip()
         running = events()  # Store the result from events()
         dt = (clock.tick(60) / 1000)
