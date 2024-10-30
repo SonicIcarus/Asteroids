@@ -3,9 +3,10 @@ import pygame
 # Base class for game objects
 class CircleShape(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
-        # we will be using this later
+        # allows the use of containers pygame parent classes group functionalities: See updateable and drawable in main.py 
         if hasattr(self, "containers"):
             super().__init__(self.containers)
+        # still inherits from pygame.sprite.Sprite just now with-out our containers named
         else:
             super().__init__()
 
