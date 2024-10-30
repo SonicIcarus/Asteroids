@@ -21,6 +21,7 @@ def game_loop(screen, clock, dt, player):
     running = True  # Start with the game running
     while running:  # Keep going while running is True
         screen.fill("black")
+        player.update(dt)
         player.draw(screen)
         pygame.display.flip()
         running = events()  # Store the result from events()
