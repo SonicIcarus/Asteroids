@@ -4,6 +4,8 @@
 import pygame
 from constants import *
 from player import *
+from asteroid import *
+from asteroidfield import *
 
 def main():
     pygame.init()
@@ -19,10 +21,20 @@ def main():
     In our case so far its only the player with their update (asteroids and bullets will follow a similar update method)
     and the player with their draw (you get the trend)
     """
+    # Initialize the sprite groups
     updateable = pygame.sprite.Group()
-    updateable.add(player)
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    # Set which groups asteroids should be a part of
+    Asteroid.containers = (asteroids, updateable, drawable)
+    AsteroidField.containers = (updateable,) #comma to make it a tuple
+
+    # Add the player to their groups
+    updateable.add(player)
     drawable.add(player)
+    # spawns asteroids
+    asteroid_field = AsteroidField()
     # created seperate game_loop function to handle running my game engine(chugging like a train choo choo)
     game_loop(screen, clock, updateable, drawable, dt=0)
     
