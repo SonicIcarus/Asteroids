@@ -1,4 +1,4 @@
-from circleshape import *
+from circleshape import CircleShape
 from constants import *
 
 class Bullet(CircleShape):
