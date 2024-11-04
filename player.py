@@ -1,11 +1,14 @@
-from circleshape import *
+import pygame
+from circleshape import CircleShape
 from constants import *
+from bullet import Bullet
 
 class Player(CircleShape):
     def __init__(self, x, y):
         # Circleshape needs to be initialised
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.__shoot_timer = 0
 
     # set up our shape
     def triangle(self):
@@ -32,6 +35,10 @@ class Player(CircleShape):
     def update(self, dt):
         keys = pygame.key.get_pressed()
 
+        # Decrease timer by dt, ensuring it doesn't go below 0
+        if self.__shoot_timer > 0:
+            self.__shoot_timer -= dt
+
         if keys[pygame.K_a]:
             self.rotate(-dt)
         elif keys[pygame.K_d]:
@@ -41,6 +48,14 @@ class Player(CircleShape):
             self.move(dt)
         elif keys[pygame.K_s]:
             self.move(-dt)
+        
+        if keys[pygame.K_SPACE] and self.__shoot_timer <= 0:
+            self.shoot()
+
+    def shoot(self):
+        self.__shoot_timer = PLAYER_SHOOT_COOLDOWN  # Set timer to cooldown value
+        shot = Bullet(self.position.x, self.position.y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
 
     """ 
     screen: send the surface to render on
